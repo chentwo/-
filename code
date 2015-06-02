@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>超简易瀑布流</title>
+<style>
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td ,span, object, iframe{ padding: 0; margin: 0; } table { border-collapse: collapse; border-spacing: 0; }
+fieldset, img { border: 0; }
+ol, ul { list-style: none; }
+h1, h2, h3, h4, h5, h6 { font-weight: normal; font-size: 100%; }
+q:before, q:after { content:""; }
+.clearfix:after{ content:""; height:0; visibility:hidden; display:block; clear:both;}
+.clearfix{ zoom:1;}
+
+/*start*/
+.box{width:1000px; margin:0 auto auto auto;}
+.add-btn{ display:block; margin:20px auto auto auto; width:90px; height:30px; text-align:center; line-height:30px; font-size:16px; background:#C33; border-radius:10px; text-decoration:none; color:#fff;}
+.column img{width:100%;}
+</style>
+</head>
+
+<body>
+<div class="box ">
+  <div id="waterfall" class="clearfix">
+    
+  </div>
+</div>
+<a href="javascript:;" class="add-btn" id="add">加载更多</a>
+</body>
+<script>
+window.onload = function(){
+        document.getElementById("add").onclick = function(){
+                        waterFall();                
+        }
+}
+
+function waterFall(){
+        var wf = document.getElementById("waterfall"),
+                        wf_len = 4, //列数
+                        wf_data = 2, //每列添加数据条数
+                        wf_space = 10,//每列左右间隔，单位px
+                        wf_bottom = 20,//每列元素上下间隔，单位px
+                        wf_boxWidth = parseInt(wf.offsetWidth),
+                        wf_width = parseInt((wf_boxWidth-((wf_len-1)*wf_space))/wf_len);
+        for(var i=0;i<wf_len;i++){  //循环
+                var column = document.createElement("div");
+                column.id = "column-"+i;
+                column.className = "column";
+                column.style.width = wf_width+"px";
+                column.style.cssFloat = "left";
+                column.style.styleFloat = "left"; //兼容IE
+                column.style.overflow = "hidden";
+                if(i===0){
+                        column.style.marginLeft = 0;        
+                }else{
+                        column.style.marginLeft = wf_space+"px";                
+                }
+                wf.appendChild(column);
+                for(var j=0;j<wf_data;j++){
+                        var dom = document.getElementById("column-"+i);
+                        var node=document.createElement("div");
+                        node.style.marginBottom = wf_bottom+"px";
+                        var img =Math.floor(Math.random()*5); //随机图片名称
+                        node.innerHTML = '<img src="http://7u2sas.com1.z0.glb.clouddn.com/images/img'+img+'.jpg">'; //需要插入的内容,结构。可在css里控制样式
+                        dom.appendChild(node);
+                        
+                }        
+        }        
+}
+
+</script>
+</html>
